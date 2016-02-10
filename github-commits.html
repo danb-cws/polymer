@@ -1,0 +1,131 @@
+<link rel="import"
+      href="bower_components/polymer/polymer.html">
+
+<dom-module id="github-commits">
+
+    <style>
+        [unresolved] {
+            opacity: 0;
+        }
+        :host{
+            display: block;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            padding: 0 1em;
+            min-height: 17em;
+            margin-bottom: 1em;
+        }
+        .heading {
+            color: #999;
+            font-weight: normal;
+            margin: 0.5em 0;
+        }
+        .latest{
+            margin-top: -0.5em;
+            font-size: 0.8em;
+        }
+        a{
+            text-decoration: none;
+            color: #999;
+        }
+        a:hover{
+            color:#f0f;
+        }
+        :host ::content .user, :host ::content .repo {
+            color: #000;
+            display: inline-block;
+            margin-right: 0.4em;
+        }
+        .commit-date{
+            color: #999;
+            font-size: 0.7em;
+        }
+        .commit-avatar{
+            width: 1.5em;
+            height: 1.5em;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5em;
+        }
+        .message ul{
+            list-style: none;
+            margin: 0;
+            padding: 0 0 0 1em;
+        }
+        .message li{
+            margin-left: 1em;
+            padding-bottom:0.8em;
+            text-indent: -2em;
+            line-height: 1;
+            font-size: 0.95em;
+        }
+
+    </style>
+
+    <template>
+        <h2 class="heading">
+            User:
+            <content select=".user"></content>
+            Repo:
+            <content select=".repo"></content>
+        </h2>
+        <p class="latest">Latest 6 commits:</p>
+        <div class="message">Loading...</div>
+    </template>
+
+    <script>
+        // register a new element
+        Polymer({
+            is: 'github-commits',
+
+            getData: function(url){
+                return new Promise(function(resolve, reject){
+                    var request = new XMLHttpRequest();
+                    request.open('GET', url, true);
+                    // request.onreadystatechange = function(){
+                    //     console.log("readystate: "+this.readyState);
+                    // };
+                    request.onload = function(){
+                        var status = this.status;
+                        if (status == 200){
+                            resolve(JSON.parse(request.responseText));
+                        } else {
+                            reject(status);
+                        }
+                    };
+                    request.send();
+                });
+            },
+
+            ready: function() {
+                var messageList = this.querySelector('.message');
+                var gitUser = this.querySelector('.user').textContent;
+                var gitRepo = this.querySelector('.repo').textContent;
+                var date, day, committer, commitMessage, committerName, committerAvatar, committerUrl, commitUrl;
+                var githubUrl = 'https://api.github.com/repos/'+gitUser+'/'+gitRepo+'/commits';
+
+                this.getData(githubUrl).then(function(data){
+
+                    messageList.innerHTML = '<ul class="style-scope github-commits">';
+                    for(var i=0; i<6; i++){
+                        commitMessage = data[i].commit.message;
+                        commitMessage.length>150 ? commitMessage = commitMessage.substring(0,150)+'...' : commitMessage;//trim and add ellipsis if over 150 char
+                        committerName = data[i].author.login;
+                        committerAvatar = '<img class="commit-avatar style-scope github-commits" src="' + data[i].committer.avatar_url +'"/>';
+                        committerUrl = data[i].committer.html_url;
+                        committer = '<a href="'+committerUrl+'" title="'+committerName+'" target="_blank">'+committerAvatar+'</a>';
+                        commitUrl = data[i].html_url;
+                        date = data[i].commit.committer.date;
+                        day = '<span class="commit-date style-scope github-commits">' + date.split("T")[0].substring(5) +', '+ date.split("T")[1].substring(0,5) + ':</span> ';
+                        messageList.querySelector("ul").innerHTML += '<li class="style-scope github-commits">'+ committer + day  + commitMessage + ' <a href="'+commitUrl+'" class="style-scope github-commits" title="Commit details" target="_blank">&#10140;</a></li>';
+                    }
+
+                }, function(status){
+                    messageList.textContent = 'Total fail! status: '+status;
+                });
+            }
+        });
+
+    </script>
+</dom-module>

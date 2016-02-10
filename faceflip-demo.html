@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Polymer demo - Faceflip</title>
+    <!--Polymer shim-->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!--Polymer component imported from an external domain-->
+    <link rel="import" href="https://fiery-torch-7498.firebaseapp.com/faceflip.html">
+    <style>
+        /*local css*/
+        body {font-family: Sans-Serif; margin: 1em;}
+        face-flip {display: inline-block;}
+    </style>
+  </head>
+  <body unresolved>
+    <h1>Meet the Team</h1>
+
+    <face-flip>
+        <span class="title">Managing Director</span>
+        <span class="name">Bob Baboon</span>
+        <img src="images/baboon_suit.jpg"/>
+    </face-flip>
+
+    <face-flip>
+        <span class="title">Finance Director</span>
+        <span class="name">John Jaguar</span>
+        <img src="images/jaguar_suit.jpg"/>
+    </face-flip>
+
+    <face-flip>
+        <span class="title">Head of Marketing</span>
+        <span class="name">Gail Giraffe</span>
+        <img src="images/giraffe_suit.jpg"/>
+    </face-flip>
+
+    <!-- only documentation from here on -->
+    <section style="margin-top: 2em;">
+        <p>A simple demo component using Google Polymer.</p>
+        <a href="javascript:void(0)" onclick="this.nextSibling.style.display='block';this.style.display='none';">Show explanation</a><div style="display: none">
+        <p>Whats interesting about this is not the actual implementation of the flip etc but the fact that the behaviour is now abstracted away into an external resource, and that we can choose what is exposed to that resource. Here's how it works:<p>
+            <ul>
+                <li>The webcomponents polyfill script is included in the head of the page.</li>
+                <li>The custom component is imported (in this case from an external domain) using a link rel="import" in the document head:
+                    <pre>
+                        &lt;link rel="import" href="https://fiery-torch-7498.firebaseapp.com/faceflip.html"&gt;
+                    </pre>
+                </li>
+                <li>Each of the "face-flip" instances in the page are marked up as:
+                    <pre>
+                        &lt;face-flip&gt;
+                            &lt;span class="title"&gt;Managing Director&lt;/span&gt;
+                            &lt;span class="name"&gt;Bob Baboon&lt;/span&gt;
+                            &lt;img src="images/baboon_suit.jpg"/&gt;
+                        &lt;/face-flip&gt;
+                    </pre>
+                    <p>So very simple, a couple of spans and an image - the minimum unique elements for each instance.</p>
+                </li>
+                <li>All of the logic and presentation around the "face-flip" element is contained in the imported component, including css, script and markup. (View source of <a href="https://fiery-torch-7498.firebaseapp.com/faceflip.html" target="_blank">faceflip.html<a> for full code). Within the component is a template tag:
+                    <pre>
+                        &lt;template&gt;
+                            &lt;div class="face-flip-container" onclick="this.classList.toggle('flipped');"&gt;
+                                &lt;div class="front"&gt;
+                                    &lt;h2&gt;
+                                        &lt;content select=".title">&lt;/content&gt;
+                                        &lt;content select=".name">&lt;/content&gt;
+                                    &lt;/h2&gt;
+                                &lt;/div&gt;
+                                &lt;div class="back"&gt;
+                                    &lt;content select="img"&gt;&lt;/content&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/template&gt;
+                    </pre>
+                    <p>The markup within each face-flip tag is injected into the content tags, ie: &lt;content select=".title">&lt;/content&gt;</p>
+                </li>
+            </ul>
+            <p>This type of distributed/syndicated/franchised content is a huge part of the business model of the web - commonly achieved using iframes with all the associated drawbacks.</p>
+        </div>
+    </section>
+
+  </body>
+</html>

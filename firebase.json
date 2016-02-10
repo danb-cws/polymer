@@ -1,0 +1,16 @@
+{
+  "firebase": "fiery-torch-7498",
+  "headers": [ {
+    "source" : "**",
+    "headers" : [ {
+      "key" : "Access-Control-Allow-Origin",
+      "value" : "*"
+    } ]
+  } ],
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

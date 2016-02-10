@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polymer demo - Github commits</title>
+    <!--promises polyfill for ie etc (not directly related to Polymer but required for the scripting used in this demo)-->
+    <script src="bower_components/promise-polyfill/Promise.min.js"></script>
+    <!--Polymer shim-->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!--Polymer component imported from an external domain-->
+    <link rel="import" href="https://fiery-torch-7498.firebaseapp.com/github-commits.html">
+    <!-- <link rel="import" href="github-commits.html"> -->
+    <style>
+        /*local css*/
+        body {font-family: sans-serif; margin: 1em;}
+    </style>
+</head>
+<body unresolved>
+<h1>Github commit widget</h1>
+
+<github-commits>
+    <span class="user">angular</span>
+    <span class="repo">angular.js</span>
+</github-commits>
+
+<github-commits>
+    <span class="user">facebook</span>
+    <span class="repo">react</span>
+</github-commits>
+
+<!-- only documentation from here on -->
+<section style="margin-top: 2em;">
+    <p>A demo component using Google Polymer, querying the Github api to show recent commits for a repository.</p>
+    <a href="javascript:void(0)" onclick="this.nextSibling.style.display='block';this.style.display='none';">Show explanation</a><div style="display: none">
+    <p>This demo shows an example of using Polymer to create a web component with simple markup, where the complexity is abstracted away to an externally located resource. Here's how it works:</p>
+    <ul>
+        <li>The webcomponents polyfill script is included in the head of the page.</li>
+        <li>The custom component is imported (in this case from an external domain) using a link rel="import" in the document head:
+                    <pre>
+                        &lt;link rel="import" href="https://fiery-torch-7498.firebaseapp.com/github-commits.html"&gt;
+                    </pre>
+        </li>
+        <li>Each of the "github-commits" instances in this page are marked up as:
+                    <pre>
+                        &lt;github-commits&gt;
+                            &lt;span class="user"&gt;angular&lt;/span&gt;
+                            &lt;span class="name"&gt;angular.js&lt;/span&gt;
+                        &lt;/github-commits&gt;
+                    </pre>
+        </li>
+        <li>All of the logic and presentation around the "github-commits" element is contained in the imported component, including css, script and markup. (View source of <a href="https://fiery-torch-7498.firebaseapp.com/github-commits.html" target="_blank">github-commits.html<a> for full code).
+        </li>
+    </ul>
+</div>
+</section>
+
+</body>
+</html>

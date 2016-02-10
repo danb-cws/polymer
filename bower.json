@@ -1,0 +1,20 @@
+{
+  "name": "Polymer samples",
+  "version": "0.0.0",
+  "authors": [
+    "danb-cws <sugarlumpltd@gmail.com>"
+  ],
+  "description": "Polymer samples",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.2.1",
+    "promise-polyfill": "2.1.0"
+  }
+}
