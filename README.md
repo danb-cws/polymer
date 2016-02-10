@@ -1,7 +1,7 @@
 # Polymer Samples
 Some basic samples using **Google Polymer**
 
-Using Polymer 1.0 currently, plan to refactor to newer release soon!
+Using Polymer 1.0 currently, I plan to refactor to newer release soon!
 
 Faceflip:
 
