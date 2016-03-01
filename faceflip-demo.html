@@ -35,7 +35,7 @@
 
     <!-- only documentation from here on -->
     <section style="margin-top: 2em;">
-        <p>A simple demo component using Google Polymer.</p>
+        <p>A (very!) simple demo component using Google Polymer.</p>
         <a href="javascript:void(0)" onclick="this.nextSibling.style.display='block';this.style.display='none';">Show explanation</a><div style="display: none">
         <p>Whats interesting about this is not the actual implementation of the flip etc but the fact that the behaviour is now abstracted away into an external resource, and that we can choose what is exposed to that resource. Here's how it works:<p>
             <ul>
@@ -45,7 +45,7 @@
                         &lt;link rel="import" href="https://fiery-torch-7498.firebaseapp.com/faceflip.html"&gt;
                     </pre>
                 </li>
-                <li>Each of the "face-flip" instances in the page are marked up as:
+                <li>Each of the "face-flip" instances in the page are marked up like so:
                     <pre>
                         &lt;face-flip&gt;
                             &lt;span class="title"&gt;Managing Director&lt;/span&gt;
@@ -53,7 +53,7 @@
                             &lt;img src="images/baboon_suit.jpg"/&gt;
                         &lt;/face-flip&gt;
                     </pre>
-                    <p>So very simple, a couple of spans and an image - the minimum unique elements for each instance.</p>
+                    <p>So a very simple structure, a couple of spans and an image - the minimum unique elements for each instance.</p>
                 </li>
                 <li>All of the logic and presentation around the "face-flip" element is contained in the imported component, including css, script and markup. (View source of <a href="https://fiery-torch-7498.firebaseapp.com/faceflip.html" target="_blank">faceflip.html<a> for full code). Within the component is a template tag:
                     <pre>
@@ -74,7 +74,7 @@
                     <p>The markup within each face-flip tag is injected into the content tags, ie: &lt;content select=".title">&lt;/content&gt;</p>
                 </li>
             </ul>
-            <p>This type of distributed/syndicated/franchised content is a huge part of the business model of the web - commonly achieved using iframes with all the associated drawbacks.</p>
+            <p>This type of distributed/syndicated/franchised content is a huge part of the business model of the web and Polymer/web components have great potential in this area.</p>
         </div>
     </section>
 
