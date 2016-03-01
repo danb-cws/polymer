@@ -48,6 +48,9 @@
             vertical-align: middle;
             margin-right: 0.5em;
         }
+        .commit-avatar-missing{
+            text-indent: 0;
+        }
         .message ul{
             list-style: none;
             margin: 0;
@@ -112,9 +115,10 @@
                     for(var i=0; i<6; i++){
                         commitMessage = data[i].commit.message;
                         commitMessage.length>150 ? commitMessage = commitMessage.substring(0,150)+'...' : commitMessage;//trim and add ellipsis if over 150 char
-                        committerName = 'unknown user' || data[i].author.login;
-                        committerAvatar = '<img class="commit-avatar style-scope github-commits" src="' + data[i].committer.avatar_url +'"/>';
-                        committerUrl = data[i].committer.html_url;
+                        //'author' and/or 'committer' are occasionally returned null from the api, so added checks here
+                        committerName = (data[i].author) ? data[i].author.login : 'Unknown author';
+                        committerAvatar = (data[i].committer) ? '<img class="commit-avatar style-scope github-commits" src="' + data[i].committer.avatar_url +'"/>' : '<img class="commit-avatar  commit-avatar-missing style-scope github-commits" src="images/missing.png"/>';
+                        committerUrl = (data[i].committer) ? data[i].committer.html_url : 'Unknown committer url';
                         committer = '<a href="'+committerUrl+'" title="'+committerName+'" target="_blank">'+committerAvatar+'</a>';
                         commitUrl = data[i].html_url;
                         date = data[i].commit.committer.date;
