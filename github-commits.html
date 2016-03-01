@@ -75,6 +75,7 @@
     </template>
 
     <script>
+        /* global Polymer, Promise */
         // register a new element
         Polymer({
             is: 'github-commits',
@@ -88,7 +89,7 @@
                     // };
                     request.onload = function(){
                         var status = this.status;
-                        if (status == 200){
+                        if (status === 200){
                             resolve(JSON.parse(request.responseText));
                         } else {
                             reject(status);
@@ -111,7 +112,7 @@
                     for(var i=0; i<6; i++){
                         commitMessage = data[i].commit.message;
                         commitMessage.length>150 ? commitMessage = commitMessage.substring(0,150)+'...' : commitMessage;//trim and add ellipsis if over 150 char
-                        committerName = data[i].author.login;
+                        committerName = 'unknown user' || data[i].author.login;
                         committerAvatar = '<img class="commit-avatar style-scope github-commits" src="' + data[i].committer.avatar_url +'"/>';
                         committerUrl = data[i].committer.html_url;
                         committer = '<a href="'+committerUrl+'" title="'+committerName+'" target="_blank">'+committerAvatar+'</a>';
