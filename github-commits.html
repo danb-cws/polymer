@@ -106,7 +106,7 @@
                 var messageList = this.querySelector('.message');
                 var gitUser = this.querySelector('.user').textContent;
                 var gitRepo = this.querySelector('.repo').textContent;
-                var date, day, committer, commitMessage, committerName, committerAvatar, committerUrl, commitUrl;
+                var date, day, committer, commitMessage, committerAvatar, commitUrl;
                 var githubUrl = 'https://api.github.com/repos/'+gitUser+'/'+gitRepo+'/commits';
 
                 this.getData(githubUrl).then(function(data){
@@ -114,20 +114,17 @@
                     messageList.innerHTML = '<ul class="style-scope github-commits">';
                     for(var i=0; i<6; i++){
                         commitMessage = data[i].commit.message;
-                        commitMessage.length>150 ? commitMessage = commitMessage.substring(0,150)+'...' : commitMessage;//trim and add ellipsis if over 150 char
-                        //'author' and/or 'committer' are occasionally returned null from the api, so added checks here
-                        committerName = (data[i].author) ? data[i].author.login : 'Unknown author';
-                        committerAvatar = (data[i].committer) ? '<img class="commit-avatar style-scope github-commits" src="' + data[i].committer.avatar_url +'"/>' : '<img class="commit-avatar  commit-avatar-missing style-scope github-commits" src="images/missing.png"/>';
-                        committerUrl = (data[i].committer) ? data[i].committer.html_url : 'Unknown committer url';
-                        committer = '<a href="'+committerUrl+'" title="'+committerName+'" target="_blank">'+committerAvatar+'</a>';
+                        commitMessage.length>150 ? commitMessage = commitMessage.substring(0,150) + '...' : commitMessage;//trim and add ellipsis if over 150 char
+                        committerAvatar = data[i].committer ? '<img class="commit-avatar style-scope github-commits" alt="'+ data[i].committer.login +'" src="' + data[i].committer.avatar_url +'"/>' : '<img class="commit-avatar  commit-avatar-missing style-scope github-commits" alt="Unknown committer" src="images/missing.png"/>';
+                        committer =  data[i].committer ? '<a href="'+ data[i].committer.html_url +'" title="'+ data[i].committer.login +'" target="_blank">'+ committerAvatar +'</a>' : committerAvatar;
                         commitUrl = data[i].html_url;
                         date = data[i].commit.committer.date;
                         day = '<span class="commit-date style-scope github-commits">' + date.split("T")[0].substring(5) +', '+ date.split("T")[1].substring(0,5) + ':</span> ';
-                        messageList.querySelector("ul").innerHTML += '<li class="style-scope github-commits">'+ committer + day  + commitMessage + ' <a href="'+commitUrl+'" class="style-scope github-commits" title="Commit details" target="_blank">&#10140;</a></li>';
+                        messageList.querySelector("ul").innerHTML += '<li class="style-scope github-commits">'+ committer + day  + commitMessage + ' <a href="'+ commitUrl +'" class="style-scope github-commits" title="Commit details" target="_blank">&#10140;</a></li>';
                     }
 
                 }, function(status){
-                    messageList.textContent = 'Total fail! status: '+status;
+                    messageList.textContent = 'Total fail! status: ' + status;
                 });
             }
         });
