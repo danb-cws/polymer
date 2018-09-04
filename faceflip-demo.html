@@ -40,7 +40,7 @@
         <p>Whats interesting about this is not the actual implementation of the flip etc but the fact that the behaviour is now abstracted away into an external resource, and that we can choose what is exposed to that resource. Here's how it works:<p>
             <ul>
                 <li>The webcomponents polyfill script is included in the head of the page.</li>
-                <li>The custom component is imported (in this case from an external domain) using a link rel="import" in the document head:
+                <li>The custom component is imported using a link rel="import" in the document head:
                     <pre>
                         &lt;link rel="import" href="https://fiery-torch-7498.firebaseapp.com/faceflip.html"&gt;
                     </pre>
